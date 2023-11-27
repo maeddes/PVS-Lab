@@ -1,5 +1,7 @@
 package pvs.Controller;
 
+import java.util.List;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,7 +36,7 @@ public class Controller {
 	}
 	
 	@GetMapping("/getAll")
-	public ResponseEntity<TaskEntity> getTasks(){
+	public ResponseEntity<List<TaskEntity>> getTasks(){
 		return ResponseEntity.ok(this.taskService.getTasks());
 	}
 	

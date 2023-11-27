@@ -21,23 +21,33 @@ public class TaskService {
 	}
 
 	public void createTask(TaskDTO task) {
-		taskRepo.save(null)
+        TaskEntity taskObj=new TaskEntity();
 		
+		taskObj.setDatum(task.getDate());
+		taskObj.setDesc(task.getDesc());
+		taskObj.setName(task.getName());
+		taskObj.setTimeslot(task.getTimeslot());
+		
+		taskRepo.save(taskObj);
 	}
 
 	public void updateTask(TaskDTO task) {
-		// TODO Auto-generated method stub
+		TaskEntity oldTask=taskRepo.getByTimeAndDate(task.getTimeslot(), task.getDate());
+		oldTask.setDatum(task.getDate());
+		oldTask.setDesc(task.getDesc());
+		oldTask.setName(task.getName());
+		oldTask.setTimeslot(task.getTimeslot());
 		
+		taskRepo.save(oldTask);
 	}
 
 	public void deleteTask(TaskDTO task) {
-		// TODO Auto-generated method stub
-		
+		TaskEntity deletedTask=taskRepo.getByTimeAndDate(task.getTimeslot(), task.getDate());	
+		taskRepo.delete(deletedTask);
 	}
 
 	public List<TaskEntity> getTasks() {
-		// TODO Auto-generated method stub
-		return null;
+		return taskRepo.findAll();
 	}
 	
 	
