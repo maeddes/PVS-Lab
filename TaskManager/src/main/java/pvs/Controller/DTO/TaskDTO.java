@@ -10,5 +10,5 @@ public class TaskDTO {
 	private String name;
 	private LocalDate date;
 	private int timeslot;
-	private String desc;
+	private String description;
 }

@@ -14,7 +14,7 @@ import lombok.Data;
 public class TaskEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false, nullable = false)
     private Long id;
 	
@@ -22,7 +22,7 @@ public class TaskEntity {
 	private String name;
 	
 	@Column 
-	private String desc;
+	private String description;
 	
 	@Column
     private LocalDate datum;

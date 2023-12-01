@@ -24,7 +24,7 @@ public class TaskService {
         TaskEntity taskObj=new TaskEntity();
 		
 		taskObj.setDatum(task.getDate());
-		taskObj.setDesc(task.getDesc());
+		taskObj.setDescription(task.getDescription());
 		taskObj.setName(task.getName());
 		taskObj.setTimeslot(task.getTimeslot());
 		
@@ -34,7 +34,7 @@ public class TaskService {
 	public void updateTask(TaskDTO task) {
 		TaskEntity oldTask=taskRepo.getByTimeAndDate(task.getTimeslot(), task.getDate());
 		oldTask.setDatum(task.getDate());
-		oldTask.setDesc(task.getDesc());
+		oldTask.setDescription(task.getDescription());
 		oldTask.setName(task.getName());
 		oldTask.setTimeslot(task.getTimeslot());
 		
