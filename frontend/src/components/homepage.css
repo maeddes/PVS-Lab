@@ -2,6 +2,19 @@ h1 {
   text-align: center
 }
 
+p {
+  text-align: center;
+}
+
+.createTaskInput {
+  margin-top: 5px;
+}
+
+.createTaskP {
+  margin: 0px;
+  margin-top: 25px;
+}
+
 input {
   display: block;
   margin-right: auto;
@@ -16,6 +29,7 @@ input {
   border: 3px solid green;
   padding: 10px;
 }
+
 .task {
   margin: auto;
   margin-bottom: 10px;
