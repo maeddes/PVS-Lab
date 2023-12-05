@@ -6,12 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import io.opentelemetry.api.OpenTelemetry;
@@ -53,10 +48,11 @@ public class Controller {
 		return ResponseEntity.ok(this.taskService.getTasks());
 	}
 	
-	@DeleteMapping("/del")
-	public void deleteTask(@RequestBody TaskDTO task) {
+	@DeleteMapping("/del/{id}")
+	public void deleteTask(@PathVariable("id") String id) {
+		Long idL = Long.parseLong(id);
 		logger.info("Delete task");
-		taskService.deleteTask(task);
+		taskService.deleteTaskById(idL);
 	}
 	
 	

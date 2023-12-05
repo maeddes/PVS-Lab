@@ -11,8 +11,10 @@ function HomePage() {
   const [TaskPopupTrigger, setTaskPopupTrigger] = useState(false);
   const [visibleTasks, setVisibleTasks] = useState([]);
   const [taskToEdit, setTaskToEdit] = useState({ name: '', datum: undefined, timeslot: undefined, description: '' });
+  const [currentDate, setcurrentDate] = useState(new Date().toISOString().split('T')[0]);
 
   const testTask = {
+    id:1,
     name: "idk",
     date: "2023-10-10",
     timeslot: 1,
@@ -24,25 +26,25 @@ function HomePage() {
     let json = JSON.stringify(task);
     await axios.put('/task/create', json, {
       headers: { 'Content-Type': 'application/json' }
-    }).then((result) => { });
+    }).then(() => {showTasksOfDate(); });
+
   }
+  async function deleteTask(id) {
+    await axios.delete(`/task/del/${id}`).then((result) => {showTasksOfDate(); });
+  }
+/*
   async function updateTask() {
     let json = JSON.stringify(testTask);
     await axios.put('/task/update', json, {
       headers: { 'Content-Type': 'application/json' }
     }).then((result) => { });
-  }
+  }*/
   async function getAllTasks() {
     return await axios.get('/task/getAll', {
       headers: { 'Content-Type': 'application/json' }
     })
   }
-  async function deleteTask() {
-    let json = JSON.stringify(testTask);
-    await axios.delete('/task/del', json, {
-      headers: { 'Content-Type': 'application/json' }
-    }).then((result) => { });
-  }
+
 
   function showTasksOfDate() {
     const data = getAllTasks();
@@ -61,13 +63,8 @@ function HomePage() {
       });
     });
   }
-
-  function removeById(id) {
-    console.log(id);
-  }
-
   function editTask(task) {
-    removeById(task.id);
+    deleteTask(task.id);
     setTaskToEdit(task);
     setTaskPopupTrigger(current => !current);
   }
@@ -77,7 +74,7 @@ function HomePage() {
       <div>
         {visibleTasks.map((visibleTask) => (
           <div className="task">
-            <button onClick={() => { removeById(visibleTask.id) }}>X</button>
+            <button onClick={() => { deleteTask(visibleTask.id); }}>X</button>
             <button onClick={() => { editTask(visibleTask); }}>edit</button>
             <p>{visibleTask.id}</p>
             <p>{visibleTask.name}</p>
@@ -133,10 +130,10 @@ function HomePage() {
       {TaskPopupTrigger && <CreateTaskPopup />}
 
       <button onClick={getAllTasks}>getAllFromBackend</button>
-      <button onClick={createTask}>createTask</button>
-      <button onClick={updateTask}>updateTask</button>
-      <button onClick={deleteTask}>deleteTask</button>
-      <input id='calendar' type="date"
+      <button onClick={() => { createTask(testTask) }}>createTask</button>
+      <button onClick={() => { deleteTask(testTask) }}>deleteTask</button>
+      <button onClick={()=>{console.log(currentDate)}}>testerbutton</button>
+      <input id='calendar' type="date" defaultValue={currentDate}
         onChange={showTasksOfDate}></input>
       <div id='taskHolder'>
         <VisibleTasks />

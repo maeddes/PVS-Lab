@@ -45,6 +45,10 @@ public class TaskService {
 		TaskEntity deletedTask=taskRepo.getByTimeAndDate(task.getTimeslot(), task.getDate());	
 		taskRepo.delete(deletedTask);
 	}
+	public void deleteTaskById(Long id) {
+		TaskEntity taskToDel=taskRepo.getReferenceById(id);
+		taskRepo.delete(taskToDel);
+	}
 
 	public List<TaskEntity> getTasks() {
 		return taskRepo.findAll();
