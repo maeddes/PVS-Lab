@@ -3,6 +3,7 @@ package pvs.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -51,7 +52,7 @@ public class TaskService {
 	}
 
 	public List<TaskEntity> getTasks() {
-		return taskRepo.findAll();
+		return taskRepo.findAll(Sort.by("timeslot").descending());
 	}
 	
 	

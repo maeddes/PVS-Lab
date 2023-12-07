@@ -6,15 +6,16 @@ function HomePage() {
   useEffect(() => {
     showTasksOfDate();
   }, []);
-  const currentDate = new Date().toISOString().split('T')[0];
+
+  const [currentDate, setcurrentDate] = useState(new Date().toISOString().split('T')[0]);
 
   //not really used because popup is alway active now.
   const [TaskPopupTrigger, setTaskPopupTrigger] = useState(false);
 
-
   const [visibleTasks, setVisibleTasks] = useState([]);
-  const [taskToEdit, setTaskToEdit] = useState({ datum: currentDate });
+  const [taskToEdit, setTaskToEdit] = useState({ datum: currentDate, timeslot: 10 });
 
+  const priorityDefaultColor = 'rgb(255, 0, 0)';
 
   async function createTask(task) {
     let json = JSON.stringify(task);
@@ -56,7 +57,7 @@ function HomePage() {
     return (
       <div id='taskHolder'>
         {visibleTasks.map((visibleTask) => (
-          <div className="task">
+          <div key={visibleTask.id} style={{ backgroundColor: `rgb(${visibleTask.timeslot *15},${(10-visibleTask.timeslot) *20},75)` }} className="task">
             <div className='taskflex'>
               <p className='TaskFieldDescription'>Name: </p>
               <p className='TaskFieldDescription'>Description: </p>
@@ -85,22 +86,22 @@ function HomePage() {
       <div id='taskPopup'>
         <div id='formFlex'>
           <div className='formFlexItem'>
-            <p className='createTaskP'>Name:</p>
-            <p className='createTaskP'>Date:</p>
-            <p className='createTaskP'>Timeslot:</p>
-            <p className='createTaskP'>description:</p>
+            <p className='createTaskP'>Name*:</p>
+            <p className='createTaskP'>Date*:</p>
+            <p className='createTaskP'>Priority:</p>
+            <p className='createTaskP'>Description:</p>
           </div>
 
           <div className='formFlexItem'>
             <input className='createTaskInput' id='nameInput' defaultValue={taskToEdit.name}></input>
             <input className='createTaskInput' type='date' id='dateInput' defaultValue={taskToEdit.datum}></input>
-            <input className='createTaskInput' id='timeSlotInput' defaultValue={taskToEdit.timeslot}></input>
+            <input className='createTaskInput' type='range' min={0} max={9} id='timeSlotInput' defaultValue={taskToEdit.timeslot}></input>
             <input className='createTaskInput' id='descriptionInput' defaultValue={taskToEdit.description}></input>
           </div>
         </div>
 
         <div id='flexTaskPopupButtons'>
-          <button id='closeForm' onClick={() => { setTaskToEdit({ datum: currentDate }); setTaskPopupTrigger(false); }}>Clear</button>
+          <button id='closeForm' onClick={() => { setTaskToEdit({ datum: currentDate, timeslot: 10 }); setTaskPopupTrigger(false); }}>Clear</button>
           <button onClick={() => {
             let date = document.getElementById("dateInput");
             let name = document.getElementById("nameInput");
@@ -114,7 +115,7 @@ function HomePage() {
               }
               createTask({ name: name.value, date: date.value, timeslot: timeslot.value, description: description.value });
               setTaskPopupTrigger(false);
-              setTaskToEdit({ datum: currentDate });
+              setTaskToEdit({ datum: currentDate, timeslot: 10 });
             }
           }}>Create / Update Task</button>
         </div>
@@ -123,38 +124,38 @@ function HomePage() {
   }
 
   function changeSelDate(change) {
+    console.log("changeSelDate")
     let cal = document.getElementById('calendar')
     let date = new Date(cal.value)
     date.setDate(date.getDate() + change);
     cal.value = date.toISOString().split('T')[0];
+    setcurrentDate(cal.value);
+    setTaskToEdit({ datum: cal.value, timeslot: 10 });
     showTasksOfDate();
   }
-
-  /* under taskform
-  <button onClick={() => { setTaskPopupTrigger(true); setTaskToEdit({datum:currentDate}); }}>&#43;</button>
-          {TaskPopupTrigger && <CreateTaskPopup />}*/
 
   return (
     <div>
       <h1 id='Title'>Task Manager</h1>
-
       <div id='container'>
         <div id='TaskForm'>
           <CreateTaskPopup />
         </div>
-
         <div id='TaskView'>
           <div className='defaultFlex'>
             <button onClick={() => { changeSelDate(-1) }}>&#8592;</button>
             <input id='calendar' type="date" defaultValue={currentDate}
-              onChange={showTasksOfDate}></input>
+              onChange={() => {
+                showTasksOfDate();
+                let cal = document.getElementById('calendar');
+                setcurrentDate(cal.value);
+                setTaskToEdit({ datum: cal.value, timeslot: 10 });
+              }}></input>
             <button onClick={() => { changeSelDate(+1) }}>&#8594;</button>
           </div>
           <VisibleTasks />
         </div>
       </div>
-
-
     </div>
   );
 }

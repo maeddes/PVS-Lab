@@ -1,5 +1,5 @@
 Body {
-  background-color: #353535;
+  background-color: rgb(70, 70, 70);
 }
 
 Button {
@@ -52,6 +52,14 @@ input{
 #TaskView {
   min-width: 33.33%;
   margin-top: 2%;
+}
+
+#TaskView {
+  max-width: 33.33%;
+}
+
+.TaskFieldValue{
+  overflow-wrap: break-word;
 }
 
 #taskHolder {
