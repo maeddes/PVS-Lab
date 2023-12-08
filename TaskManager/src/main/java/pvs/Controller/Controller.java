@@ -42,12 +42,23 @@ public class Controller {
 		taskService.updateTask(task);
 	}
 	
-	@GetMapping("/getAll")
+	@GetMapping("/getdailypriosorted")
 	public ResponseEntity<List<TaskEntity>> getTasks(){
 		logger.info("Get tasks");
-		return ResponseEntity.ok(this.taskService.getTasks());
+		return ResponseEntity.ok(this.taskService.getTasksSortedByPriority());
 	}
-	
+
+	@GetMapping("/getTasksOrderByDate")
+	public ResponseEntity<List<TaskEntity>> getTasksSortedByDate(){
+		logger.info("Get tasks sorted by date desc");
+		return ResponseEntity.ok(this.taskService.getTasksSortedByDate());
+	}
+
+
+
+
+
+
 	@DeleteMapping("/del/{id}")
 	public void deleteTask(@PathVariable("id") String id) {
 		Long idL = Long.parseLong(id);

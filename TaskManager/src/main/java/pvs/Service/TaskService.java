@@ -1,5 +1,10 @@
 package pvs.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.WeekFields;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +56,24 @@ public class TaskService {
 		taskRepo.delete(taskToDel);
 	}
 
-	public List<TaskEntity> getTasks() {
+	public List<TaskEntity> getTasksSortedByPriority() {
 		return taskRepo.findAll(Sort.by("timeslot").descending());
 	}
+
+	public List<TaskEntity> getTasksSortedByDate() {
+		return taskRepo.findAll(Sort.by("datum").ascending());
+	}
+
+
+
+
+	/*public List<TaskEntity> getWeeklyTasksByDate(String date) {
+		LocalDate d = LocalDate.parse(date);
+		int weekNumber = d.get(ChronoField.ALIGNED_WEEK_OF_YEAR);
+		LocalDate mondayOfWeek = d.with(WeekFields.ISO.dayOfWeek(DayOfWeek.MONDAY));
+		System.out.println(weekNumber);
+		return taskRepo.findAll(Sort.by("datum").descending());
+	}*/
 	
 	
 	
