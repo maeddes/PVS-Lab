@@ -118,6 +118,8 @@ function HomePage() {
   const CreateTaskPopup = () => {
     return (
       <div id='taskPopup'>
+        <h1>Task Creation</h1>
+        <p>Fields marked with (*) are Mandatory.</p>
         <div id='formFlex'>
           <div className='formFlexItem'>
             <p className='createTaskP'>Name*:</p>
