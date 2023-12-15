@@ -17,7 +17,7 @@ a "task-view" in the middle.
 
 To create a task, you must fill in starred fields and click "create task/update task.
 There's a "clear" button to reset inputs in creating-tasks-view.
-The Date in creating-tasks-view is initially set to the current date and changes to the date which is selected in task-view.
+The Date in creating-tasks-view is initially set to the current date and changes to the date which is selected in the task-view calendar.
 
 The default mode of the task-view is Day-Mode, displaying tasks for today, sorted by priority (color).
 Clicking the day button switches to Week-Mode, showing tasks for the week sorted by due date.
