@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    ports:
+      - 5432:5432
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - 16686:16686
+      - 14250:14250
+  
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes: 
+      - ./frontend/nginxbuilding/build:/usr/share/nginx/html
+      - ./frontend/nginxbuilding/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 6969:80
+
+  spring:
+    container_name: spring
+    build:
+      context: /TaskManager
+      dockerfile: DockerfileSpring
+    environment:
+      - OTEL_SERVICE_NAME=spring
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_TRACES_EXPORTER=jaeger
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+    depends_on:
+      - postgres
+      - jaeger
+    ports:
+      - "8080:8080"
+    
+
+volumes:
+  postgres_data:
+  nginx_data:

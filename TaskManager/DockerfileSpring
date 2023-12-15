@@ -1,0 +1,9 @@
+FROM openjdk:17-jdk-slim
+EXPOSE 8080
+ADD target/taskmanager.jar taskmanager.jar
+ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar .
+ENV JAVA_TOOL_OPTIONS "-javaagent:./opentelemetry-javaagent.jar"
+ENTRYPOINT ["java", "-jar", "/taskmanager.jar"]
+
+
+
