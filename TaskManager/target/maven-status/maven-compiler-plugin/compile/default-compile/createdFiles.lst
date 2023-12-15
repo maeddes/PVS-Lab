@@ -1,0 +1,6 @@
+pvs\TaskManagerApplication.class
+pvs\Repository\TaskRepository.class
+pvs\Controller\Controller.class
+pvs\Service\TaskService.class
+pvs\Controller\DTO\TaskDTO.class
+pvs\Entity\TaskEntity.class

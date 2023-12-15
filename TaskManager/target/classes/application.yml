@@ -1,0 +1,5 @@
+otel:
+  export:
+    jaeger:
+      endpoint: http://jaeger-collector:9411  
+      service-name: tracing
