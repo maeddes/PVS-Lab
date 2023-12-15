@@ -21,6 +21,7 @@ The Date in creating-tasks-view is initially set to the current date and changes
 
 The default mode of the task-view is Day-Mode, displaying tasks for today, sorted by priority (color).
 Clicking the day button switches to Week-Mode, showing tasks for the week sorted by due date.
+A week starts with Sunday and Ends with Saturday. If any Date of a Week is Selected the week is shown in the task-view.
 Tasks can be deleted by clicking 'x' and the edit button transfers task data to creating-tasks-view for updates, which are applied by pressing "create task/update task."
 
 # Docker Containers
