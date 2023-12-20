@@ -1,0 +1,18 @@
+FROM openjdk:17-jdk-slim
+
+EXPOSE 8080
+
+ADD target/taskmanager.jar taskmanager.jar
+ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar .
+
+ENV JAVA_TOOL_OPTIONS "-javaagent:./opentelemetry-javaagent.jar"
+
+ENV OTEL_SERVICE_NAME=spring
+ENV OTEL_METRICS_EXPORTER=none
+ENV OTEL_TRACES_EXPORTER=jaeger
+ENV OTEL_EXPORTER_JAEGER_ENDPOINT=http://172.17.0.3:14250
+ENV SPRING_DATASOURCE_URL=jdbc:postgresql://172.17.0.2:5432/postgres
+ENV SPRING_DATASOURCE_USERNAME=postgres
+ENV SPRING_DATASOURCE_PASSWORD=123
+
+ENTRYPOINT ["java", "-jar", "/taskmanager.jar"]

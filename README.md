@@ -43,7 +43,14 @@ Image created from custom docker file, opentelemetry and jaeger included in the 
 Runs on port 8080
 
 # Build and Deployment
+Custom docker files for custom images are added: nginx, postgres, jaeger in the general directory and spring in TaskManager directory. 
+Custom images are on docker hub.
+
+All of the custom images work as intended except for the nginx one, thus the app needs to be started via docker compose.
+Compose (yaml) builds the containers from general/official images except for the spring one.
+
 The build and deployment process involves using Docker Compose. Execute the following command to build and run the containers:
+
 docker-compose up
 
 # Monitoring and Tracing
